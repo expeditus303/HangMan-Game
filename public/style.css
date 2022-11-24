@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Roboto:wght@400;700&display=swap');
+
+body {
+    width: 1025px;
+    margin: auto;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700;
+}
+
+/* GAME */
+.gameContainer {
+    display: flex;
+    margin-top: 59px;
+    justify-content: space-between;
+    padding: 0 55px;
+}
+
+.gameContainer img {
+    width: 400px;
+}
+
+.gameContainer div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 30px 0px;
+}
+
+.gameContainer button {
+    width: 200px;
+    height: 60px;
+    background: #27AE60;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: white;
+}
+
+.gameContainer h1 {
+    font-size: 50px;
+}
+
+/* LETTERS */
+.lettersContainer {
+    display: flex;
+    justify-content: center;
+    margin: 70px auto 0px;
+    flex-wrap: wrap;
+    width: 665px;   
+}
+
+.lettersContainer button {
+    width: 40px;
+    height: 40px;
+    background-color: #E1ECF4;
+    border: 1px solid #7AA7C7;
+    border-radius: 3px;
+    margin: 11px 11px 0px 0px;
+}
+
+.lettersContainer button.disable {
+    background-color: #9FAAB5;
+}
+
+.lettersContainer button:nth-child(13n+13) {
+    margin-right: 0px;
+}
+
+/* GUESS */
+.guessContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 665px;
+    margin: 56px auto;
+}
+
+.guessContainer p,
+.guessContainer input {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+}
+
+.guessContainer input {
+    width: 220px;
+    height: 40px;
+    border: 1px solid #CCCCCC;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+}
+
+.guessContainer button {
+    width: 130px;
+    height: 40px;
+    background: #E1ECF4;
+    border: 1px solid #7AA7C7;
+    border-radius: 3px;
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3C76A1;
+}
