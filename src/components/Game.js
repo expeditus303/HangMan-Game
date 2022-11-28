@@ -1,19 +1,18 @@
-import palavras from "../palavras"
+import { useEffect, useState } from "react"
+
 export default function Game(props) {
 
-    const {onClick, classLetters} = props
+    const { classLetters, onClick, image, hideWord, winner, Words, looser, startGame} = props
 
-    const word = palavras[Math.floor(Math.random() * palavras.length)];
-    console.log(word)
+    Words()
 
-    const hide = '_ '.repeat(word.length)
 
     return (
         <div className="gameContainer">
-            <img src="./assets/forca0.png" alt="" />
+            <img src={`./assets/forca${image}.png`} alt="" />
             <div>
                 <button onClick={onClick} >Take a word!</button>
-                <h1>{classLetters ? hide : ""}</h1>
+                <h1 className={`${winner ? "green" : ""} ${looser ? "red" : ""} `}>{classLetters && !looser ? hideWord : ""} {looser ? startGame : ""}</h1>
             </div>
         </div>
     )

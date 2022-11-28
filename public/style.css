@@ -44,6 +44,14 @@ body {
     font-size: 50px;
 }
 
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
 /* LETTERS */
 .lettersContainer {
     display: flex;
@@ -51,6 +59,10 @@ body {
     margin: 70px auto 0px;
     flex-wrap: wrap;
     width: 665px;   
+}
+
+.teste {
+    font-size: 900px;
 }
 
 .lettersContainer button {
