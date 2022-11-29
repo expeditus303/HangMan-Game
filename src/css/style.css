@@ -44,6 +44,10 @@ body {
     font-size: 50px;
 }
 
+.black {
+    color: black;
+}
+
 .green {
     color: green;
 }
@@ -74,7 +78,7 @@ body {
     margin: 11px 11px 0px 0px;
 }
 
-.lettersContainer button.disable, .guessContainer button.disable {
+.lettersContainer button:disabled, .guessContainer button:disabled {
     background-color: #9FAAB5;
 }
 

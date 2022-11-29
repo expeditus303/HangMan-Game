@@ -2,104 +2,114 @@ import React, { useState, useEffect } from "react";
 import Game from "./components/Game";
 import Letters from "./components/Letters";
 import TakeAGuess from "./components/TakeAGuess";
-import palavras from "./palavras"
+import alfabet from "./alfabet";
+import words from "./words"
 
 function App() {
 
-  const [classLetters, setClassLetters] = useState(false)
+  const [disableInput, setDisableInput] = useState(true)     // to disable inpunt
+  const [usedLetters, setUsedLetters] = useState(alfabet)    // to disable letters buttons
+  const [errors, setErrors] = useState(0)                    // to count user errors
+  const [gameWord, setGameWord] = useState([])               // word that user is trying to guess (viewed as _ on screen)
+  const [chosenWord, setChoseWord] = useState([])            // word that was random picked (the answer)
+  const [wordColor, setWordColor] = useState("black")        // word color 
+  const [guessInput, setGuessInput] = useState("")                // input to try a guess
 
-  const [startGame, setStartGame] = useState([])
-
-  const [lettersList, setLettersList] = useState([])
-
-  const [newWord, setNewWord] = useState("")
-
-  const [image, setImage] = useState(0)
-
-  const [hideWord, setHideWord] = useState([])
-
-  const [winner, setWinner] = useState(false)
-
-  const [contador, setContador] = useState(0)
-
-  const [looser, setLooser] = useState(false)
-
-
-
-  function createLetterList(newLetter) {
-    let newArray = [...lettersList, newLetter]
-    setLettersList(newArray)
-    setNewWord(newLetter)
-    console.log(newArray)
-    setClassLetters(true)
+  function startGame() {                                     // function to start the game on the button
+    randomWord()
+    setDisableInput(false)
+    setUsedLetters([])
+    setErrors(0)
+    setWordColor("black")
+    setGuessInput("")
   }
 
-
-  // BREAK 
-
-  
-  function Words() {
-    let erro = 0
-    if (hideWord.length == 0) {
-      for (let i = 0; i < startGame.length; i++) {
-        hideWord.push('_ ')
-      }
-    }
-  }
-
-  function render() {
-    let novaArray = [...startGame]
-    let nova = [...hideWord]
-    if (novaArray.includes(newWord)) {
-      
-      for (let i = 0; i < novaArray.length; i++) {
-        let index = novaArray.indexOf(newWord)
-        while (index !== -1) {
-          nova.splice(index, 1, newWord)
-          index = novaArray.indexOf(newWord, index + 1)
-          setHideWord(nova)
-        }
-      
-      }
-
-      if (!nova.includes('_ ')) {
-        setWinner(true)
-      }
-
-      console.log('TEM LETRA! ')
-
-    } else {
-      console.log('NÃO TEM LETRA')
-      if (contador < 6) {
-        let seguraContador = contador + 1
-        setContador(seguraContador)
-        
-        setImage(seguraContador)
-        if (seguraContador == 6) {
-          setLooser(true)
-        }
-      }
-
-    }
-  }
-  
-
-
-  function letsStart() {
-    let word = palavras[Math.floor(Math.random() * palavras.length)];
-    let result = word
-    setClassLetters(!classLetters)
+  function randomWord() {                                    // function to pull a random word from word.js (i is an index)
+    const i = Math.floor(Math.random() * words.length)
+    const word = words[i]
     const wordArray = Array.from(word)
-    setStartGame(wordArray)
+    setChoseWord(wordArray)
+    let underlines = []
+    wordArray.forEach(() => underlines.push("_ "))
+    setGameWord(underlines)
   }
 
+  function clickLetter(clickedLetter) {                     // function to the letter clicked (and than disable the button)  
+    setUsedLetters([...usedLetters, clickedLetter])
 
+    if (chosenWord.includes(clickedLetter)) {
+      letterIsRigth(clickedLetter)
+    } else {
+      letterIsWrong(clickedLetter)
+    }
+  }
+
+  function letterIsRigth(clickedLetter) {                     // fuction used when click on a right letter to change "_" for the letter
+    const newGameWord = [...gameWord]
+
+    chosenWord.forEach((chosenLetter, i) => {
+      if (chosenWord[i] === clickedLetter) {
+        newGameWord[i] = chosenLetter
+      }
+    })
+    setGameWord(newGameWord)
+
+    // verify if user wins
+    if (!newGameWord.includes("_ ")) {
+      setWordColor("green")
+      endGame()
+    }
+  }
+
+  function letterIsWrong(clickedLetter) {                     // fuction used when click on a wrong letter
+    const newErrors = errors + 1
+    setErrors(newErrors)
+
+    if (newErrors === 6) {
+      setWordColor("red")
+      endGame()
+    }
+  }
+
+  function guessWord() {
+    let chosenWordString = ""
+    chosenWord.forEach(letter => chosenWordString += letter)
+
+    if (chosenWordString === guessInput) {
+      setWordColor("green")
+    } else {
+      setWordColor("red")
+      setErrors(6)
+      alert("Errrrrrrrrou")
+    }
+
+    endGame()
+  }
+
+  function endGame() {                                         // fuction to disable buttons and show the word on end of the game
+    setDisableInput(true)
+    setUsedLetters(alfabet)
+    setGameWord(chosenWord)
+  }
 
   return (
     <>
-      <Game classLetters={classLetters} onClick={letsStart} image={image} setImage={setImage} hideWord={hideWord} winner={winner} Words={Words} looser={looser} startGame={startGame}/>
-      <Letters classLetters={classLetters} setClassLetters={setClassLetters} saveLetter={createLetterList} render={render}/>
-      <TakeAGuess classLetters={classLetters} setClassLetters={setClassLetters} />
+      <Game
+        startGame={startGame}
+        errors={errors}
+        gameWord={gameWord}
+        wordColor={wordColor}
+      />
+      <Letters
+        usedLetters={usedLetters}
+        clickLetter={clickLetter}
+      />
+      <TakeAGuess
+        disableInput={disableInput}
+        guessInput={guessInput}
+        setGuessInput={setGuessInput}
+        guessWord={guessWord}
+      />
     </>
   );
 }

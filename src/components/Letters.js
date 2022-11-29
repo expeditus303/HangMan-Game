@@ -1,17 +1,21 @@
-import { useState } from "react"
+import alfabet from "../alfabet"
 import Letter from "./Letter"
+
 
 export default function Letters(props) {
 
-    const { classLetters, setClassLetters, saveLetter, render} = props
-
-    const alfabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-
+    const { usedLetters, clickLetter } = props
 
     return (
         <div className="lettersContainer">
             {alfabet.map((a) => (
-                <Letter saveLetter={saveLetter} classLetters={classLetters} letter={a} key={a} render={render}/>
+                <button
+                    key={a}
+                    disabled={usedLetters.includes(a)}
+                    onClick={() => clickLetter(a)}
+                >
+                    {a.toUpperCase()}
+                </button>
             ))}
         </div>
     )
