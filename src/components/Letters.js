@@ -1,6 +1,4 @@
 import alfabet from "../alfabet"
-import Letter from "./Letter"
-
 
 export default function Letters(props) {
 
@@ -13,6 +11,7 @@ export default function Letters(props) {
                     key={a}
                     disabled={usedLetters.includes(a)}
                     onClick={() => clickLetter(a)}
+                    onKeyDown
                 >
                     {a.toUpperCase()}
                 </button>
